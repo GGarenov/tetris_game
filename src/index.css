@@ -1,0 +1,114 @@
+body {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background-image: url('/src/img/bg.png'); 
+  background-size: cover;
+  background-position: center;
+  font-family: 'Arial', sans-serif; /* Add a suitable font family */
+  color: black; /* Set text color */
+}
+
+.app {
+  display: grid;
+  grid-template-areas:
+    ". title ."
+    ". game controls";
+  grid-template-columns: repeat(3, 1fr);
+}
+
+h1 {
+  text-align: center;
+  grid-area: title;
+  color: white; /* Set the text color to white for better visibility on the image */
+}
+
+button {
+
+  padding: 4px;
+  width: 150px;
+  height: 50px;
+  font-size: 24px;
+  background-color: #04AA6D
+}
+
+.button:hover {
+  background-color: white; /* Green */
+ 
+}
+
+.board {
+  border: 2px solid black;
+  user-select: none;
+  margin: auto;
+  grid-area: game;
+}
+
+.controls {
+  grid-area: controls;
+}
+
+.row {
+  display: flex;
+}
+
+.upcoming {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 30px;
+  border: 2px solid white; /* Add a white border around the upcoming blocks */
+  padding: 1%;
+  
+}
+
+.cell {
+  width: 30px;
+  aspect-ratio: 1;
+  border: 1px solid rgb(86, 86, 86);
+}
+
+.cell.hidden {
+  visibility: hidden;
+}
+
+.cell.Empty {
+  background-color: black;
+}
+
+.cell.I {
+  background-color: rgb(80, 227, 230);
+}
+
+.cell.J {
+  background-color: rgb(36, 95, 223);
+}
+
+.cell.L {
+  background-color: rgb(223, 173, 36);
+}
+
+.cell.O {
+  background-color: rgb(223, 217, 36);
+}
+
+.cell.S {
+  background-color: rgb(48, 211, 56);
+}
+
+.cell.T {
+  background-color: rgb(132, 61, 198);
+}
+
+.cell.Z {
+  background-color: rgb(227, 78, 78);
+}
+
+.controls h2 {
+  font-size: 32px; 
+  color: white; 
+}
+
+
+
+
+
