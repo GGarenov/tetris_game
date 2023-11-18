@@ -4,8 +4,12 @@ body {
   background-image: url('/src/img/bg.png'); 
   background-size: cover;
   background-position: center;
-  font-family: 'Arial', sans-serif; /* Add a suitable font family */
   color: black; /* Set text color */
+}
+
+@font-face {
+  font-family: 'Pixel';
+  src: url('font/Pixel-LCD-7.woff') format('woff');
 }
 
 .app {
@@ -19,7 +23,9 @@ body {
 h1 {
   text-align: center;
   grid-area: title;
-  color: white; /* Set the text color to white for better visibility on the image */
+  color: white;
+  font-family: Pixel, Arial, Helvetica, sans-serif;
+  
 }
 
 button {
@@ -44,9 +50,19 @@ button {
 }
 
 .controls {
-  grid-area: controls;
-  text-align: center; /* Align text in the center */
-  margin-top: 20px; /* Add some top margin for spacing */
+   grid-area: controls;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* Set the flex-direction to column */
+  align-items: center; /* Center the items horizontally */
+  justify-content: center; /* Center the items vertically */
+  margin: 0 0 20px 0;
+  padding: 20px;
+  min-height: 30px;
+  width: 100%;
+  border-radius: 20px;
+  font-family: Pixel, Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
 }
 
 .row {
@@ -58,7 +74,7 @@ button {
   flex-direction: row-reverse;
   justify-content: flex-end;
   gap: 30px;
-  border: 2px solid white; /* Add a white border around the upcoming blocks */
+  border: 2px solid gray; /* Add a white border around the upcoming blocks */
   padding: 1%;
   
 }
