@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Board from "./components/Board";
 import UpcomingBlocks from "./components/UpcomingBlocks";
-import { useTetris } from "./hooks/useTetris";
+import { useTetris } from "./hooks/useTetris.jsx";
 
 function App() {
-  const { board, startGame, isPlaying, score, upcomingBlocks } = useTetris();
+  const { board, startGame, isPlaying, score, level, upcomingBlocks } = useTetris();
   const [showUpcoming, setShowUpcoming] = useState(false);
 
   const handleNewGameClick = () => {
@@ -20,7 +20,10 @@ function App() {
         <h2>Score: {score}</h2>
         {showUpcoming && <h2>Upcoming:</h2>}
         {isPlaying ? (
-          <UpcomingBlocks upcomingBlocks={upcomingBlocks} />
+          <>
+            <UpcomingBlocks upcomingBlocks={upcomingBlocks} />
+            <h2>Level: {level}</h2>
+          </>
         ) : (
           <button className="button" onClick={handleNewGameClick}>
             New Game

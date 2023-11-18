@@ -16,6 +16,7 @@ export function useTetris() {
   const [isCommitting, setIsCommitting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState(null);
+  const [level, setLevel] = useState(1);
 
   const [{ board, droppingRow, droppingColumn, droppingBlock, droppingShape }, dispatchBoardState] = useTetrisBoard();
 
@@ -23,6 +24,7 @@ export function useTetris() {
     const startingBlocks = [getRandomBlock(), getRandomBlock(), getRandomBlock()];
     setScore(0);
     setUpcomingBlocks(startingBlocks);
+    setLevel(1);
     setIsCommitting(false);
     setIsPlaying(true);
     setTickSpeed(TickSpeed.Normal);
@@ -58,7 +60,16 @@ export function useTetris() {
       setTickSpeed(TickSpeed.Normal);
     }
     setUpcomingBlocks(newUpcomingBlocks);
-    setScore((prevScore) => prevScore + getPoints(numCleared));
+    setScore((prevScore) => {
+      const newScore = prevScore + getPoints(numCleared);
+      const newLevel = Math.floor(newScore / 1000) + 1;
+
+      if (newLevel > level) {
+        setLevel(newLevel);
+      }
+      return newScore;
+    });
+
     dispatchBoardState({
       type: "commit",
       newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBoard],
@@ -173,6 +184,7 @@ export function useTetris() {
     startGame,
     isPlaying,
     score,
+    level,
     upcomingBlocks,
   };
 }

@@ -45,6 +45,8 @@ button {
 
 .controls {
   grid-area: controls;
+  text-align: center; /* Align text in the center */
+  margin-top: 20px; /* Add some top margin for spacing */
 }
 
 .row {
