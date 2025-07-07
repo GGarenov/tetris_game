@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { EmptyCell, SHAPES } from "../type";
 import { useInterval } from "./useInterval";
-import { useTetrisBoard, hasCollisions, BOARD_HEIGHT, getEmptyBoard, getRandomBlock } from "./useTetrisBoard";
+import {
+  useTetrisBoard,
+  hasCollisions,
+  BOARD_HEIGHT,
+  getEmptyBoard,
+  getRandomBlock,
+} from "./useTetrisBoard";
 
 var TickSpeed;
 (function (TickSpeed) {
@@ -18,10 +24,17 @@ export function useTetris() {
   const [tickSpeed, setTickSpeed] = useState(null);
   const [level, setLevel] = useState(1);
 
-  const [{ board, droppingRow, droppingColumn, droppingBlock, droppingShape }, dispatchBoardState] = useTetrisBoard();
+  const [
+    { board, droppingRow, droppingColumn, droppingBlock, droppingShape },
+    dispatchBoardState,
+  ] = useTetrisBoard();
 
   const startGame = useCallback(() => {
-    const startingBlocks = [getRandomBlock(), getRandomBlock(), getRandomBlock()];
+    const startingBlocks = [
+      getRandomBlock(),
+      getRandomBlock(),
+      getRandomBlock(),
+    ];
     setScore(0);
     setUpcomingBlocks(startingBlocks);
     setLevel(1);
@@ -39,7 +52,13 @@ export function useTetris() {
     }
 
     const newBoard = structuredClone(board);
-    addShapeToBoard(newBoard, droppingBlock, droppingShape, droppingRow, droppingColumn);
+    addShapeToBoard(
+      newBoard,
+      droppingBlock,
+      droppingShape,
+      droppingRow,
+      droppingColumn
+    );
 
     let numCleared = 0;
     for (let row = BOARD_HEIGHT - 1; row >= 0; row--) {
@@ -76,18 +95,36 @@ export function useTetris() {
       newBlock,
     });
     setIsCommitting(false);
-  }, [board, dispatchBoardState, droppingBlock, droppingColumn, droppingRow, droppingShape, upcomingBlocks]);
+  }, [
+    board,
+    dispatchBoardState,
+    droppingBlock,
+    droppingColumn,
+    droppingRow,
+    droppingShape,
+    upcomingBlocks,
+  ]);
 
   const gameTick = useCallback(() => {
     if (isCommitting) {
       commitPosition();
-    } else if (hasCollisions(board, droppingShape, droppingRow + 1, droppingColumn)) {
+    } else if (
+      hasCollisions(board, droppingShape, droppingRow + 1, droppingColumn)
+    ) {
       setTickSpeed(TickSpeed.Sliding);
       setIsCommitting(true);
     } else {
       dispatchBoardState({ type: "drop" });
     }
-  }, [board, commitPosition, dispatchBoardState, droppingColumn, droppingRow, droppingShape, isCommitting]);
+  }, [
+    board,
+    commitPosition,
+    dispatchBoardState,
+    droppingColumn,
+    droppingRow,
+    droppingShape,
+    isCommitting,
+  ]);
 
   useInterval(() => {
     if (!isPlaying) {
@@ -176,8 +213,48 @@ export function useTetris() {
 
   const renderedBoard = structuredClone(board);
   if (isPlaying) {
-    addShapeToBoard(renderedBoard, droppingBlock, droppingShape, droppingRow, droppingColumn);
+    addShapeToBoard(
+      renderedBoard,
+      droppingBlock,
+      droppingShape,
+      droppingRow,
+      droppingColumn
+    );
   }
+
+  // Touch control handlers
+  const moveLeft = useCallback(() => {
+    if (isPlaying) {
+      dispatchBoardState({ type: "move", isPressingLeft: true });
+      setTimeout(
+        () => dispatchBoardState({ type: "move", isPressingLeft: false }),
+        100
+      );
+    }
+  }, [isPlaying, dispatchBoardState]);
+
+  const moveRight = useCallback(() => {
+    if (isPlaying) {
+      dispatchBoardState({ type: "move", isPressingRight: true });
+      setTimeout(
+        () => dispatchBoardState({ type: "move", isPressingRight: false }),
+        100
+      );
+    }
+  }, [isPlaying, dispatchBoardState]);
+
+  const moveDown = useCallback(() => {
+    if (isPlaying) {
+      setTickSpeed(TickSpeed.Fast);
+      setTimeout(() => setTickSpeed(TickSpeed.Normal), 100);
+    }
+  }, [isPlaying]);
+
+  const rotate = useCallback(() => {
+    if (isPlaying) {
+      dispatchBoardState({ type: "move", isRotating: true });
+    }
+  }, [isPlaying, dispatchBoardState]);
 
   return {
     board: renderedBoard,
@@ -186,6 +263,11 @@ export function useTetris() {
     score,
     level,
     upcomingBlocks,
+    moveLeft,
+    moveRight,
+    moveDown,
+    rotate,
+    isGameOver: !isPlaying && tickSpeed === null,
   };
 }
 
@@ -206,13 +288,20 @@ function getPoints(numCleared) {
   }
 }
 
-function addShapeToBoard(board, droppingBlock, droppingShape, droppingRow, droppingColumn) {
+function addShapeToBoard(
+  board,
+  droppingBlock,
+  droppingShape,
+  droppingRow,
+  droppingColumn
+) {
   droppingShape
     .filter((row) => row.some((isSet) => isSet))
     .forEach((row, rowIndex) => {
       row.forEach((isSet, colIndex) => {
         if (isSet) {
-          board[droppingRow + rowIndex][droppingColumn + colIndex] = droppingBlock;
+          board[droppingRow + rowIndex][droppingColumn + colIndex] =
+            droppingBlock;
         }
       });
     });

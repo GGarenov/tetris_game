@@ -1,23 +1,37 @@
 body {
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
-  background-image: url('/src/img/bg.png'); 
+  background-image: url("/src/img/bg.png");
   background-size: cover;
   background-position: center;
   color: black; /* Set text color */
 }
 
 @font-face {
-  font-family: 'Pixel';
-  src: url('font/Pixel-LCD-7.woff') format('woff');
+  font-family: "Pixel";
+  src: url("font/Pixel-LCD-7.woff") format("woff");
 }
 
+/* Responsive app layout */
 .app {
-  display: grid;
-  grid-template-areas:
-    ". title ."
-    ". game controls";
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+@media (min-width: 600px) {
+  .app {
+    display: grid;
+    grid-template-areas:
+      ". title ."
+      ". game controls";
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+    padding: 0;
+  }
 }
 
 h1 {
@@ -25,44 +39,75 @@ h1 {
   grid-area: title;
   color: white;
   font-family: Pixel, Arial, Helvetica, sans-serif;
-  
 }
 
 button {
-
   padding: 4px;
   width: 150px;
   height: 50px;
   font-size: 24px;
-  background-color: #04AA6D
+  background-color: #04aa6d;
 }
 
 .button:hover {
   background-color: white; /* Green */
- 
 }
 
 .board {
   border: 2px solid black;
   user-select: none;
-  margin: auto;
+  margin: 0 auto 1rem auto;
   grid-area: game;
+  width: 90vw;
+  max-width: 350px;
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .controls {
-   grid-area: controls;
+  grid-area: controls;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column; /* Set the flex-direction to column */
-  align-items: center; /* Center the items horizontally */
-  justify-content: center; /* Center the items vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 0 0 20px 0;
-  padding: 20px;
+  padding: 20px 0;
   min-height: 30px;
   width: 100%;
   border-radius: 20px;
   font-family: Pixel, Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
+}
+.mobile-controls {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 0 0;
+}
+
+@media (min-width: 600px) {
+  .mobile-controls {
+    display: none;
+  }
+}
+
+.touch-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.touch-btn {
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  margin: 0 0.2rem;
+}
+
+.touch-btn:active {
+  background: #444;
 }
 
 .row {
@@ -76,7 +121,6 @@ button {
   gap: 30px;
   border: 2px solid gray; /* Add a white border around the upcoming blocks */
   padding: 1%;
-  
 }
 
 .cell {
@@ -122,11 +166,6 @@ button {
 }
 
 .controls h2 {
-  font-size: 32px; 
-  color: white; 
+  font-size: 32px;
+  color: white;
 }
-
-
-
-
-
