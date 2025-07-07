@@ -23,6 +23,7 @@ export function useTetris() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState(null);
   const [level, setLevel] = useState(1);
+  const [hasStarted, setHasStarted] = useState(false);
 
   const [
     { board, droppingRow, droppingColumn, droppingBlock, droppingShape },
@@ -41,6 +42,7 @@ export function useTetris() {
     setIsCommitting(false);
     setIsPlaying(true);
     setTickSpeed(TickSpeed.Normal);
+    setHasStarted(true);
     dispatchBoardState({ type: "start" });
   }, [dispatchBoardState]);
 
@@ -267,7 +269,7 @@ export function useTetris() {
     moveRight,
     moveDown,
     rotate,
-    isGameOver: !isPlaying && tickSpeed === null,
+    isGameOver: hasStarted && !isPlaying && tickSpeed === null,
   };
 }
 

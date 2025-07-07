@@ -8,9 +8,9 @@ export default function TouchControls({
   disabled,
 }) {
   return (
-    <div className="touch-controls">
+    <div className="touch-controls touch-controls-grid">
       <button
-        className="touch-btn"
+        className="touch-btn left"
         onClick={onLeft}
         disabled={disabled}
         aria-label="Left"
@@ -18,7 +18,15 @@ export default function TouchControls({
         ◀️
       </button>
       <button
-        className="touch-btn"
+        className="touch-btn rotate"
+        onClick={onRotate}
+        disabled={disabled}
+        aria-label="Rotate"
+      >
+        🔄
+      </button>
+      <button
+        className="touch-btn down"
         onClick={onDown}
         disabled={disabled}
         aria-label="Down"
@@ -26,20 +34,12 @@ export default function TouchControls({
         🔽
       </button>
       <button
-        className="touch-btn"
+        className="touch-btn right"
         onClick={onRight}
         disabled={disabled}
         aria-label="Right"
       >
         ▶️
-      </button>
-      <button
-        className="touch-btn"
-        onClick={onRotate}
-        disabled={disabled}
-        aria-label="Rotate"
-      >
-        🔄
       </button>
     </div>
   );

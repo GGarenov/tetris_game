@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Board from "./components/Board";
 import UpcomingBlocks from "./components/UpcomingBlocks";
 import TouchControls from "./components/TouchControls";
@@ -28,8 +27,15 @@ function App() {
   return (
     <div className="app">
       <h1>Tetris</h1>
+
+      {showUpcoming && isPlaying && (
+        <div className="upcoming-mobile">
+          <h2>Upcoming:</h2>
+          <UpcomingBlocks upcomingBlocks={upcomingBlocks} />
+        </div>
+      )}
       <Board currentBoard={board} />
-      {/* Show touch controls only when playing and on small screens */}
+
       <div className="mobile-controls">
         <TouchControls
           onLeft={moveLeft}
@@ -52,13 +58,15 @@ function App() {
         ) : (
           <>
             <h2>Score: {score}</h2>
-            {showUpcoming && <h2>Upcoming:</h2>}
-            {isPlaying ? (
-              <>
+
+            {showUpcoming && isPlaying && (
+              <div className="upcoming-desktop">
+                <h2>Upcoming:</h2>
                 <UpcomingBlocks upcomingBlocks={upcomingBlocks} />
-                <h2>Level: {level}</h2>
-              </>
-            ) : (
+              </div>
+            )}
+            {isPlaying && <h2>Level: {level}</h2>}
+            {!isPlaying && (
               <button className="button" onClick={handleNewGameClick}>
                 New Game
               </button>
